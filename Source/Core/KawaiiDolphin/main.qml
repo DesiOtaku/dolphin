@@ -5,9 +5,18 @@ import QtGraphicalEffects 1.0
 Item {
     id: root
 
+    property int selectButtonPushed:0;
+    property int downButtonPushed:0;
+    property int upButtonPushed:0;
+
+    onSelectButtonPushedChanged: mainMenuBar.handleSelectState(selectButtonPushed);
+    onDownButtonPushedChanged: mainMenuBar.handleDownState(downButtonPushed);
+    onUpButtonPushedChanged: mainMenuBar.handleUpState(upButtonPushed);
+
+
     Rectangle {
         id: background
-        color: "black"
+        color: "#050505"
         anchors.fill: parent
         Image {
             id: logo
@@ -53,36 +62,36 @@ Item {
         }
 
 
-        Glow {
-            id: glow
-            anchors.fill: logo
-            radius: root.width/50
-            samples: 17
-            color: "white"
-            source: logo
-            visible: false
+//        Glow {
+//            id: glow
+//            anchors.fill: logo
+//            radius: root.width/50
+//            samples: 17
+//            color: "white"
+//            source: logo
+//            visible: false
 
-            SequentialAnimation {
-                NumberAnimation {
-                    target: glow
-                    property: "radius"
-                    from: 5
-                    to: 100
-                    duration: 5000
-                }
-                NumberAnimation {
-                    target: glow
-                    property: "radius"
-                    from: 100
-                    to: 5
-                    duration: 5000
-                }
-                loops: Animation.Infinite
-                running: true
-            }
+//            SequentialAnimation {
+//                NumberAnimation {
+//                    target: glow
+//                    property: "radius"
+//                    from: 5
+//                    to: 100
+//                    duration: 5000
+//                }
+//                NumberAnimation {
+//                    target: glow
+//                    property: "radius"
+//                    from: 100
+//                    to: 5
+//                    duration: 5000
+//                }
+//                loops: Animation.Infinite
+//                running: true
+//            }
 
 
-        }
+//        }
     }
 
     Text {
@@ -104,6 +113,7 @@ Item {
 
 
     MainMenu {
+        id:mainMenuBar
         anchors.left: parent.left
         anchors.top: name.bottom
         anchors.bottom: parent.bottom

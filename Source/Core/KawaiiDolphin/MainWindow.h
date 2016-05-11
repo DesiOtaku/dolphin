@@ -5,9 +5,8 @@
 #pragma once
 
 #include <QMainWindow>
-#include <QStackedWidget>
 #include <QString>
-#include <QToolBar>
+#include <QQuickItem>
 
 
 class PathDialog;
@@ -19,6 +18,13 @@ class MainWindow final : public QMainWindow
 public:
 	explicit MainWindow();
 	~MainWindow();
+
+public slots:
+    void pollController();
+
+
+private:
+    QQuickItem *m_qRoot;
 
 
 

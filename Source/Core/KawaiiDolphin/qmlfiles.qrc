@@ -7,4 +7,5 @@
         <file>dolphin-emu.png</file>
         <file>dolphin-emu.svg</file>
     </qresource>
+    <qresource prefix="/sounds"/>
 </RCC>

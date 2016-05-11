@@ -53,7 +53,7 @@ public:
 	//
 	// An input on a device
 	//
-	class Input : public Control
+    class   Input : public Control
 	{
 	public:
 		// things like absolute axes/ absolute mouse position will override this
