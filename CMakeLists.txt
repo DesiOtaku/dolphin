@@ -11,10 +11,12 @@ option(USE_SHARED_GTEST "Use shared gtest library if found" OFF)
 option(USE_UPNP "Enables UPnP port mapping support" ON)
 option(DISABLE_WX "Disable wxWidgets (use Qt or CLI interface)" OFF)
 option(ENABLE_QT2 "Enable Qt2 (use the other experimental Qt interface)" OFF)
+option(ENABLE_KAWAII "Enable Kawaii Interface" OFF)
 option(ENABLE_PCH "Use PCH to speed up compilation" ON)
 option(ENABLE_LTO "Enables Link Time Optimization" OFF)
 option(ENABLE_GENERIC "Enables generic build that should run on any little-endian host" OFF)
 option(ENABLE_HEADLESS "Enables running Dolphin as a headless variant" OFF)
+
 
 # Enable SDL for default on operating systems that aren't OSX, Android, Linux or Windows.
 if(NOT APPLE AND NOT ANDROID AND NOT ${CMAKE_SYSTEM_NAME} STREQUAL "Linux" AND NOT MSVC)
@@ -793,6 +795,11 @@ endif()
 if(ENABLE_QT2)
 	find_package(Qt5Widgets REQUIRED)
 	message("Found Qt version ${Qt5Core_VERSION}, enabling the Qt backend")
+endif()
+
+if(ENABLE_KAWAII)
+	find_package(Qt5Widgets REQUIRED)
+	message("Found Qt version ${Qt5Core_VERSION}, enabling the Kawaii backend")
 endif()
 
 if(NOT DISABLE_WX)

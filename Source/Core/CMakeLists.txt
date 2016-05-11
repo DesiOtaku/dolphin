@@ -10,4 +10,6 @@ add_subdirectory(VideoBackends)
 
 if(ENABLE_QT2)
 	add_subdirectory(DolphinQt2)
+elseif(ENABLE_KAWAII)
+	add_subdirectory(KawaiiDolphin)
 endif()
