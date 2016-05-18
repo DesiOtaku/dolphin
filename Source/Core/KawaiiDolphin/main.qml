@@ -94,31 +94,55 @@ Item {
 //        }
     }
 
-    Text {
-        id: name
-        color:"white"
-        text: qsTr("Dolphin")
-        font.pixelSize: parent.height/10
-        style: Text.Raised
-        styleColor: "blue"
-        anchors.horizontalCenter: parent.horizontalCenter
 
+    MainMenu {
+        id:mainMenuBar
+        opacity: 0
+        anchors.left: parent.left
+        anchors.top: parent.top
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: parent.height/100
+        anchors.topMargin: parent.height/100
+        anchors.leftMargin: parent.width/100
 
-        PropertyAnimation on opacity {
+        onItemActivated: {
+            secondMenu.updateInteral(itemName)
+        }
+        onItemSelected: {
+            secondMenu.isSelected = true;
+        }
+
+    }
+
+    SecondaryMenu {
+        id:secondMenu
+        opacity: mainMenuBar.opacity
+        anchors.left: mainMenuBar.right
+        anchors.leftMargin: parent.width/100
+        anchors.rightMargin: parent.width/100
+        anchors.right: parent.right
+        anchors.top: parent.top
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: parent.height/100
+        anchors.topMargin: parent.height/100
+    }
+
+    SequentialAnimation {
+        running: true
+        PropertyAnimation {
+            target: logo
+            property: "opacity"
+            from: 1
+            to: 0.05
+            duration: 1000
+            easing.type: Easing.InCubic
+        } PropertyAnimation {
+            target: mainMenuBar
+            property: "opacity"
             from: 0
             to: 1
             duration: 1000
         }
-    }
-
-
-    MainMenu {
-        id:mainMenuBar
-        anchors.left: parent.left
-        anchors.top: name.bottom
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: parent.height/100
-        anchors.leftMargin: parent.width/100
     }
 
 }

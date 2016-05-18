@@ -5,23 +5,25 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
 set(SRCS
-	AboutDialog.cpp
-	Host.cpp
+        AboutDialog.cpp
+        Host.cpp
 	Main.cpp
 	MainWindow.cpp
 	MenuBar.cpp
-	RenderWidget.cpp
-	Resources.cpp
-	Settings.cpp
-	ToolBar.cpp
+        RenderWidget.cpp
+        Resources.cpp
+        Settings.cpp
+        ToolBar.cpp
         qmlfiles.qrc
+        icons.qrc
+        sounds.qrc
 	Config/PathDialog.cpp
-	GameList/GameFile.cpp
-	GameList/GameList.cpp
-	GameList/GameListModel.cpp
-	GameList/GameTracker.cpp
-	GameList/ListProxyModel.cpp
-	GameList/TableDelegate.cpp
+        GameList/GameFile.cpp
+        GameList/GameList.cpp
+        GameList/GameListModel.cpp
+        GameList/GameTracker.cpp
+        GameList/ListProxyModel.cpp
+        GameList/TableDelegate.cpp
 	)
 
 list(APPEND LIBS core uicommon)

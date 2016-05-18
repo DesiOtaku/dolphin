@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/sounds">
+        <file>tick.wav</file>
+        <file>select.wav</file>
+    </qresource>
+</RCC>

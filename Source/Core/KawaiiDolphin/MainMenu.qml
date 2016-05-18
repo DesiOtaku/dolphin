@@ -12,8 +12,13 @@ Item {
     property bool wasUpPushedBefore: false;
     property bool wasDownPushedBefore: false;
     property var indexes : [gameSelect,controlSettings,videoSettings,audioSettings]
+    signal itemActivated(var itemName);
+    signal itemSelected(var itemName);
+
 
     property int sIndex: 0
+
+    focus: true
 
     onSIndexChanged: {
         for(var i=0;i<indexes.length;i++) {
@@ -21,12 +26,16 @@ Item {
                 indexes[i].curSelected = false;
             }
         }
-        console.debug(sIndex)
+        //console.debug(sIndex)
         indexes[sIndex].curSelected = true;
     }
 
 
     function handleUpState( newVal) {
+        if(!focus) {
+            return;
+        }
+
         if(newVal == 1) {
             wasUpPushedBefore = true;
         } else if(newVal == 0 && wasUpPushedBefore) {
@@ -36,10 +45,17 @@ Item {
             } else {
                 sIndex--;
             }
+            itemActivated(indexToName(sIndex));
+            moveSound.play();
         }
+
     }
 
     function handleDownState( newVal) {
+        if(!focus) {
+            return;
+        }
+
         if(newVal == 1) {
             wasDownPushedBefore = true;
         } else if(newVal == 0 && wasDownPushedBefore) {
@@ -49,16 +65,37 @@ Item {
             } else {
                 sIndex++;
             }
+            itemActivated(indexToName(sIndex));
+            moveSound.play();
         }
-
     }
 
     function handleSelectState( newVal) {
+        if(!focus) {
+            return;
+        }
+
+
         if(newVal == 1) {
             wasSelectPushedBefore = true;
         } else if(newVal == 0 && wasSelectPushedBefore) {
             wasSelectPushedBefore = false;
-            console.log("a");
+            itemSelected((indexToName(sIndex)));
+            selectSound.play();
+            focus = false;
+        }
+    }
+
+    function indexToName(index) {
+        switch(index) {
+        case 0:
+            return "selectGame";
+        case 1:
+            return "configControl";
+        case 2:
+            return "configAudio";
+        case 3:
+            return "configVideo";
         }
     }
 
@@ -89,14 +126,6 @@ Item {
             font.pixelSize: menuSize
             color: "white"
             text:qsTr("Select Game")
-//            layer.enabled: true
-//            layer.effect: Glow {
-//                radius: gameSelect.curSelected ? 16 :0
-//                samples: radius * 2
-//                source: gameSelect
-//                color: "blue"
-//                spread: .5
-//            }
         }
 
         Text {
@@ -105,14 +134,6 @@ Item {
             font.pixelSize: menuSize
             color: "white"
             text:qsTr("Configure Controllers")
-//            layer.enabled: true
-//            layer.effect: Glow {
-//                radius: controlSettings.curSelected ? 16 :0
-//                samples: radius * 2
-//                source: controlSettings
-//                color: "blue"
-//                spread: .5
-//            }
         }
 
         Text {
@@ -122,13 +143,6 @@ Item {
             color: "white"
             text:qsTr("Configure Video")
             layer.enabled: true
-//            layer.effect: Glow {
-//                radius: videoSettings.curSelected ? 16 :0
-//                samples: radius * 2
-//                source: videoSettings
-//                color: "blue"
-//                spread: .5
-//            }
         }
 
         Text {
@@ -138,21 +152,22 @@ Item {
             color: "white"
             text:qsTr("Configure Audio")
             layer.enabled: true
-//            layer.effect: Glow {
-//                radius: audioSettings.curSelected ? 16 :0
-//                samples: radius * 2
-//                source: audioSettings
-//                color: "blue"
-//                spread: .5
-
-//            }
         }
 
     }
 
+    SoundEffect {
+        id: moveSound
+        source: "qrc:/sounds/tick.wav"
+    }
+
+    SoundEffect {
+        id: selectSound
+        source: "qrc:/sounds/select.wav"
+    }
 
 
-    focus: true
+
 
 
 
@@ -164,6 +179,8 @@ Item {
                 sIndex++;
             }
             event.accepted = true;
+            itemActivated(indexToName(sIndex));
+            moveSound.play();
         } else if(event.key == Qt.Key_Up) {
             if(sIndex==0) {
                 sIndex = 3;
@@ -171,7 +188,18 @@ Item {
                 sIndex--;
             }
             event.accepted = true;
+            itemActivated(indexToName(sIndex));
+            moveSound.play();
         }
+        else if(event.key == Qt.Key_Return) {
+            itemSelected((indexToName(sIndex)));
+            selectSound.play();
+            focus = false;
+        }
+    }
+
+    Component.onCompleted: {
+        itemActivated(indexToName(sIndex));
     }
 
 }

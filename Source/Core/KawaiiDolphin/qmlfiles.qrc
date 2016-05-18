@@ -2,10 +2,7 @@
     <qresource prefix="/qml">
         <file>main.qml</file>
         <file>MainMenu.qml</file>
+        <file>SecondaryMenu.qml</file>
+        <file>ConfigControler.qml</file>
     </qresource>
-    <qresource prefix="/icons">
-        <file>dolphin-emu.png</file>
-        <file>dolphin-emu.svg</file>
-    </qresource>
-    <qresource prefix="/sounds"/>
 </RCC>
