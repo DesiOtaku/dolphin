@@ -4,55 +4,26 @@
 
 #pragma once
 
-#include <QLabel>
-#include <QListView>
-#include <QSortFilterProxyModel>
-#include <QStackedWidget>
-#include <QTableView>
+#include <QQuickImageProvider>
+#include <QPixmap>
+#include <QList>
+#include <QDir>
 
-#include "DolphinQt2/GameList/GameFile.h"
-#include "DolphinQt2/GameList/GameListModel.h"
+#include "GameFile.h"
 
-class TableDelegate;
-
-class GameList final : public QStackedWidget
+class GameList  : public QQuickImageProvider
 {
-	Q_OBJECT
-
 public:
-	explicit GameList(QWidget* parent = nullptr);
-	QString GetSelectedGame() const;
-
-public slots:
-	void SetTableView() { SetPreferredView(true); }
-	void SetListView() { SetPreferredView(false); }
-	void SetViewColumn(int col, bool view) { m_table->setColumnHidden(col, !view); }
-
-private slots:
-	void ShowContextMenu(const QPoint&);
-	void OpenWiki();
-	void SetDefaultISO();
-
-signals:
-	void GameSelected();
-	void DirectoryAdded(const QString& dir);
-	void DirectoryRemoved(const QString& dir);
+    GameList(QString url);
+    QStringList getNameList();
+    QPixmap requestPixmap(const QString &id, QSize *size, const QSize &requestedSize);
+    QStringList nameList();
 
 private:
-	void MakeTableView();
-	void MakeListView();
-	void MakeEmptyView();
-	// We only have two views, just use a bool to distinguish.
-	void SetPreferredView(bool table);
-	void ConsiderViewChange();
+    void findIsos(QDir findMe);
 
-	GameListModel* m_model;
-	TableDelegate* m_delegate;
-	QSortFilterProxyModel* m_table_proxy;
-	QSortFilterProxyModel* m_list_proxy;
 
-	QListView* m_list;
-	QTableView* m_table;
-	QLabel* m_empty;
-	bool m_prefer_table;
+    QList<GameFile> m_FoundGames;
+
+
 };

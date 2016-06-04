@@ -14,6 +14,9 @@
 #include <QDebug>
 #include <QTimer>
 #include <QQuickItem>
+#include <QDir>
+
+#include "GameList/GameList.h"
 
 
 #include "InputCommon/ControllerEmu.h"
@@ -31,9 +34,15 @@ MainWindow::MainWindow() : QMainWindow(nullptr)
     setWindowTitle(tr("Kawaii Dolphin"));
 
     QQuickWidget *qmlWid = new QQuickWidget();
+    GameList *gameList = new GameList(QDir::homePath() + QDir::separator() + QStringLiteral("games"));
+    qmlWid->engine()->addImageProvider(QStringLiteral("gameimg"),gameList);
     qmlWid->setSource(QUrl(QStringLiteral("qrc:/qml/main.qml")));
     qmlWid->setResizeMode(QQuickWidget::SizeRootObjectToView);
     m_qRoot = qmlWid->rootObject();
+
+    m_qRoot->setProperty("gameNameList",gameList->getNameList());
+
+
 
 
     QWidget *cWid;
@@ -46,11 +55,9 @@ MainWindow::MainWindow() : QMainWindow(nullptr)
     centralWidget()->layout()->addWidget(qmlWid);
 
 
+
+
     g_controller_interface.Initialize(nullptr);
-
-
-
-    this->resize(1280,720);
 
     QTimer *timer = new QTimer(this);
     connect(timer,SIGNAL(timeout()),this,SLOT(pollController()));

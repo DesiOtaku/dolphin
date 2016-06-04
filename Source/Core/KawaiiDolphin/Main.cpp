@@ -22,8 +22,9 @@ int main(int argc, char* argv[])
 	Resources::Init();
 
     MainWindow win;
-    win.show();
+    //win.show();
     //win.showFullScreen();
+    win.showMaximized();
     int retval = app.exec();
 
 	BootManager::Stop();

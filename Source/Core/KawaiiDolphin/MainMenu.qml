@@ -11,10 +11,9 @@ Item {
     property bool wasSelectPushedBefore: false;
     property bool wasUpPushedBefore: false;
     property bool wasDownPushedBefore: false;
-    property var indexes : [gameSelect,controlSettings,videoSettings,audioSettings]
+    property var indexes : [gameSelect,controlSettings,videoSettings,audioSettings,aboutHelp]
     signal itemActivated(var itemName);
     signal itemSelected(var itemName);
-
 
     property int sIndex: 0
 
@@ -41,7 +40,7 @@ Item {
         } else if(newVal == 0 && wasUpPushedBefore) {
             wasUpPushedBefore = false;
             if(sIndex==0) {
-                sIndex = 3;
+                sIndex = indexes.length -1;
             } else {
                 sIndex--;
             }
@@ -60,10 +59,9 @@ Item {
             wasDownPushedBefore = true;
         } else if(newVal == 0 && wasDownPushedBefore) {
             wasDownPushedBefore = false;
-            if(sIndex >= 3) {
+            sIndex++;
+            if(sIndex >= indexes.length) {
                 sIndex =0;
-            } else {
-                sIndex++;
             }
             itemActivated(indexToName(sIndex));
             moveSound.play();
@@ -96,13 +94,20 @@ Item {
             return "configAudio";
         case 3:
             return "configVideo";
+        case 4:
+            return "helpAbout"
         }
+    }
+
+    function regainFocus() {
+        focus = true;
     }
 
 
     Rectangle {
+        id: selectRect
         color:"#00AAFF"
-        opacity: .5
+        opacity: mainMenuRoot.focus ? .5 : .25
         radius: root.width/200
         x: indexes[sIndex].x + root.width/200
         y: indexes[sIndex].y
@@ -142,7 +147,6 @@ Item {
             font.pixelSize: menuSize
             color: "white"
             text:qsTr("Configure Video")
-            layer.enabled: true
         }
 
         Text {
@@ -151,8 +155,16 @@ Item {
             font.pixelSize: menuSize
             color: "white"
             text:qsTr("Configure Audio")
-            layer.enabled: true
         }
+
+        Text {
+            id: aboutHelp
+            property bool curSelected: false
+            font.pixelSize: menuSize
+            color: "white"
+            text:qsTr("About / Help")
+        }
+
 
     }
 
@@ -166,24 +178,20 @@ Item {
         source: "qrc:/sounds/select.wav"
     }
 
-
-
-
-
-
     Keys.onPressed:  {
         if(event.key == Qt.Key_Down) {
-            if(sIndex >= 3) {
+            if(sIndex >= indexes.length -1) {
                 sIndex =0;
             } else {
                 sIndex++;
             }
+
             event.accepted = true;
             itemActivated(indexToName(sIndex));
             moveSound.play();
         } else if(event.key == Qt.Key_Up) {
-            if(sIndex==0) {
-                sIndex = 3;
+            if(sIndex<=0) {
+                sIndex = indexes.length - 1;
             } else {
                 sIndex--;
             }

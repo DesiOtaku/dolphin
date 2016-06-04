@@ -4,5 +4,6 @@
         <file>MainMenu.qml</file>
         <file>SecondaryMenu.qml</file>
         <file>ConfigControler.qml</file>
+        <file>SelectGame.qml</file>
     </qresource>
 </RCC>

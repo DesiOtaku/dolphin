@@ -8,10 +8,12 @@ Item {
     property int selectButtonPushed:0;
     property int downButtonPushed:0;
     property int upButtonPushed:0;
+    property var gameNameList;
 
     onSelectButtonPushedChanged: mainMenuBar.handleSelectState(selectButtonPushed);
     onDownButtonPushedChanged: mainMenuBar.handleDownState(downButtonPushed);
     onUpButtonPushedChanged: mainMenuBar.handleUpState(upButtonPushed);
+
 
 
     Rectangle {
@@ -36,11 +38,11 @@ Item {
             id: emitter
             anchors.fill: parent
             system: partSys
-            emitRate: 10
+            emitRate: 20
             lifeSpan: 10000
             lifeSpanVariation: 5000
             size: .1
-            startTime: 10000
+            //startTime: 10000
             opacity: .1
             velocity: AngleDirection {
                 angleVariation: 30
@@ -94,7 +96,6 @@ Item {
 //        }
     }
 
-
     MainMenu {
         id:mainMenuBar
         opacity: 0
@@ -125,7 +126,14 @@ Item {
         anchors.bottom: parent.bottom
         anchors.bottomMargin: parent.height/100
         anchors.topMargin: parent.height/100
+
+        onGoBack: {
+            mainMenuBar.regainFocus();
+        }
     }
+
+
+
 
     SequentialAnimation {
         running: true

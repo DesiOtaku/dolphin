@@ -9,15 +9,16 @@ Column {
     spacing: 1
 
 
-    Text {
-        id: gameSelect
-        property bool curSelected: true
-        font.pixelSize: menuSize
-        color: "white"
-        text:qsTr("Run Wizard")
-        horizontalAlignment: Text.AlignHCenter
+    ListView {
+        model: root.gameNameList
         anchors.left: parent.left
         anchors.right: parent.right
+        height: 500
+        delegate: Item {
+            height: 100
+            width: 100
+            Text { id:aaa; text: modelData; color:"white";font.pixelSize: 25 }
+        }
     }
 
     SoundEffect {

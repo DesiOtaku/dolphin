@@ -9,6 +9,7 @@
 #include <QFileInfo>
 #include <QImage>
 #include <QSharedPointer>
+#include <QDebug>
 
 #include "Common/FileUtil.h"
 #include "Core/ConfigManager.h"
@@ -75,10 +76,12 @@ void GameFile::ReadBanner(const DiscIO::IVolume& volume)
    		                           (buffer[i] & 0x0000FF) >> 0));
 	}
 
-	if (!banner.isNull())
+    if (!banner.isNull()) {
 		m_banner = QPixmap::fromImage(banner);
-	else
+    }
+    else {
 		m_banner = Resources::GetMisc(Resources::BANNER_MISSING);
+    }
 }
 
 bool GameFile::LoadFileInfo(const QString& path)
