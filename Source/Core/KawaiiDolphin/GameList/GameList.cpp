@@ -9,11 +9,15 @@
 GameList::GameList(QString url) : QQuickImageProvider(ImageType::Pixmap){
     QDir base(url);
     findIsos(base);
-    qDebug()<<m_FoundGames.length();
 }
 
 QPixmap GameList::requestPixmap(const QString &id, QSize *size, const QSize &requestedSize) {
-    return QPixmap();
+    int index = id.toInt();
+    if(m_FoundGames.length() > index) {
+        return m_FoundGames[index].GetBanner();
+    } else {
+        return QPixmap();
+    }
 }
 
 QStringList GameList::getNameList() {
@@ -41,5 +45,8 @@ void GameList::findIsos(QDir findMe) {
             }
         }
     }
+}
 
+QString GameList::getFilePath(int index) {
+    return m_FoundGames[index].GetPath();
 }

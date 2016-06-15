@@ -12,6 +12,8 @@
 #include "DolphinQt2/Resources.h"
 #include "UICommon/UICommon.h"
 
+#include "VideoCommon/VideoBackendBase.h"
+
 int main(int argc, char* argv[])
 {
 	QApplication app(argc, argv);
@@ -22,9 +24,10 @@ int main(int argc, char* argv[])
 	Resources::Init();
 
     MainWindow win;
-    //win.show();
+    win.resize(1280,720);
+    win.show();
     //win.showFullScreen();
-    win.showMaximized();
+    //win.showMaximized();
     int retval = app.exec();
 
 	BootManager::Stop();

@@ -10,9 +10,9 @@ Item {
     property int upButtonPushed:0;
     property var gameNameList;
 
-    onSelectButtonPushedChanged: mainMenuBar.handleSelectState(selectButtonPushed);
-    onDownButtonPushedChanged: mainMenuBar.handleDownState(downButtonPushed);
-    onUpButtonPushedChanged: mainMenuBar.handleUpState(upButtonPushed);
+    onSelectButtonPushedChanged: {mainMenuBar.handleSelectState(selectButtonPushed);secondMenu.handleSelectState(selectButtonPushed);}
+    onDownButtonPushedChanged: {mainMenuBar.handleDownState(downButtonPushed);secondMenu.handleDownState(downButtonPushed);}
+    onUpButtonPushedChanged: {mainMenuBar.handleUpState(upButtonPushed);secondMenu.handleUpState(upButtonPushed);}
 
 
 
@@ -98,7 +98,6 @@ Item {
 
     MainMenu {
         id:mainMenuBar
-        opacity: 0
         anchors.left: parent.left
         anchors.top: parent.top
         anchors.bottom: parent.bottom
@@ -135,22 +134,22 @@ Item {
 
 
 
-    SequentialAnimation {
-        running: true
-        PropertyAnimation {
-            target: logo
-            property: "opacity"
-            from: 1
-            to: 0.05
-            duration: 1000
-            easing.type: Easing.InCubic
-        } PropertyAnimation {
-            target: mainMenuBar
-            property: "opacity"
-            from: 0
-            to: 1
-            duration: 1000
-        }
-    }
+//    SequentialAnimation {
+//        running: true
+//        PropertyAnimation {
+//            target: logo
+//            property: "opacity"
+//            from: 1
+//            to: 0.05
+//            duration: 1000
+//            easing.type: Easing.InCubic
+//        } PropertyAnimation {
+//            target: mainMenuBar
+//            property: "opacity"
+//            from: 0
+//            to: 1
+//            duration: 1000
+//        }
+//    }
 
 }

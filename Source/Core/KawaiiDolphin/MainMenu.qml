@@ -107,7 +107,7 @@ Item {
     Rectangle {
         id: selectRect
         color:"#00AAFF"
-        opacity: mainMenuRoot.focus ? .5 : .25
+        opacity: mainMenuRoot.focus ? .75 : .25
         radius: root.width/200
         x: indexes[sIndex].x + root.width/200
         y: indexes[sIndex].y
@@ -115,6 +115,11 @@ Item {
         height: indexes[sIndex].height
         Behavior on y {NumberAnimation{duration:150;}}
         Behavior on width {NumberAnimation{duration:150;}}
+        Behavior on opacity {
+            NumberAnimation {
+                duration: 150
+            }
+        }
     }
 
     Column {
