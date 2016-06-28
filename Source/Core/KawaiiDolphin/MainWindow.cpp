@@ -97,6 +97,8 @@ void MainWindow::pollController() {
                     m_qRoot->setProperty("upButtonPushed",i->GetState());
                 } else if(i->GetName() == "Axis 1+") {
                     m_qRoot->setProperty("downButtonPushed",i->GetState());
+                } else if(i->GetName() == "Button 1") {
+                    m_qRoot->setProperty("backButtonPushed",i->GetState());
                 }
             }
         }

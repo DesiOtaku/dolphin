@@ -1,3 +1,7 @@
+// Copyright 2015 Dolphin Emulator Project
+// Licensed under GPLv2+
+// Refer to the license.txt file included.
+
 import QtQuick 2.0
 import QtGraphicalEffects 1.0
 import QtMultimedia 5.6
@@ -91,9 +95,9 @@ Item {
         case 1:
             return "configControl";
         case 2:
-            return "configAudio";
-        case 3:
             return "configVideo";
+        case 3:
+            return "configAudio";
         case 4:
             return "helpAbout"
         }

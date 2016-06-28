@@ -5,5 +5,8 @@
         <file>SecondaryMenu.qml</file>
         <file>ConfigControler.qml</file>
         <file>SelectGame.qml</file>
+        <file>VideoConfig.qml</file>
+        <file>AudioConfig.qml</file>
+        <file>HelpAbout.qml</file>
     </qresource>
 </RCC>

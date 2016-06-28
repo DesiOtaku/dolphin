@@ -1,3 +1,7 @@
+// Copyright 2015 Dolphin Emulator Project
+// Licensed under GPLv2+
+// Refer to the license.txt file included.
+
 import QtQuick 2.0
 import QtQuick.Particles 2.0
 import QtGraphicalEffects 1.0
@@ -8,12 +12,13 @@ Item {
     property int selectButtonPushed:0;
     property int downButtonPushed:0;
     property int upButtonPushed:0;
+    property int backButtonPushed:0;
     property var gameNameList;
 
     onSelectButtonPushedChanged: {mainMenuBar.handleSelectState(selectButtonPushed);secondMenu.handleSelectState(selectButtonPushed);}
     onDownButtonPushedChanged: {mainMenuBar.handleDownState(downButtonPushed);secondMenu.handleDownState(downButtonPushed);}
     onUpButtonPushedChanged: {mainMenuBar.handleUpState(upButtonPushed);secondMenu.handleUpState(upButtonPushed);}
-
+    onBackButtonPushedChanged: {secondMenu.handleBackState(backButtonPushed);}
 
 
     Rectangle {

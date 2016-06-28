@@ -8,8 +8,6 @@ Column {
 
     spacing: 1
 
-
-
     ListView {
         id: gameListView
         model: root.gameNameList
