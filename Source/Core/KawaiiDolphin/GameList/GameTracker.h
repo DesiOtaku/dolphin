@@ -11,8 +11,8 @@
 #include <QStringList>
 #include <QThread>
 
-#include "DolphinQt2/GameList/GameFile.h"
-#include "DolphinQt2/GameList/GameTracker.h"
+#include "GameFile.h"
+#include "GameTracker.h"
 
 class GameLoader;
 
