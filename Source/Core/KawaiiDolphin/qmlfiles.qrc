@@ -8,5 +8,6 @@
         <file>VideoConfig.qml</file>
         <file>AudioConfig.qml</file>
         <file>HelpAbout.qml</file>
+        <file>PauseMenu.qml</file>
     </qresource>
 </RCC>

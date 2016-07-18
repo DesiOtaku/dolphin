@@ -9,6 +9,7 @@
 #include <QMainWindow>
 #include <QString>
 #include <QQuickItem>
+#include <QQuickWidget>
 #include "RenderWidget.h"
 
 
@@ -26,11 +27,13 @@ public:
 public slots:
     void pollController();
     void playGame(int index);
+    void handleEscapePressed();
 
 private:
     QQuickItem *m_qRoot;
     RenderWidget *m_RenWid;
     GameList *m_GameList;
     QTimer *m_timer;
+    QQuickWidget *m_PauseWidget;
     bool m_playingGame;
 };

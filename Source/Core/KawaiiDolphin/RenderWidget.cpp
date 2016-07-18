@@ -4,8 +4,8 @@
 
 #include <QKeyEvent>
 
-#include "DolphinQt2/Host.h"
-#include "DolphinQt2/RenderWidget.h"
+#include "Host.h"
+#include "RenderWidget.h"
 
 RenderWidget::RenderWidget(QWidget* parent)
 	: QWidget(parent)
@@ -27,8 +27,9 @@ bool RenderWidget::event(QEvent* event)
 	case QEvent::KeyPress:
 	{
 		QKeyEvent* ke = static_cast<QKeyEvent*>(event);
-		if (ke->key() == Qt::Key_Escape)
+        if (ke->key() == Qt::Key_B)
 			emit EscapePressed();
+        return true;
 		break;
 	}
 	case QEvent::WinIdChange:

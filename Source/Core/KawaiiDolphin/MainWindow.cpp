@@ -16,6 +16,9 @@
 #include <QQuickItem>
 #include <QDir>
 #include <QQmlContext>
+#include <QLabel>
+#include <QScreen>
+#include <QGuiApplication>
 
 #include "InputCommon/ControllerEmu.h"
 #include "InputCommon/InputConfig.h"
@@ -30,6 +33,7 @@
 #include "Core/HW/ProcessorInterface.h"
 
 #include "InputCommon/ControllerEmu.h"
+#include "screenshotimgprovider.h"
 
 #include "MainWindow.h"
 
@@ -66,6 +70,8 @@ MainWindow::MainWindow() : QMainWindow(nullptr)
     m_timer->start();
 
     m_playingGame = false;
+
+    m_PauseWidget = NULL;
 }
 
 MainWindow::~MainWindow()
@@ -111,9 +117,38 @@ void MainWindow::playGame(int index) {
     //qDebug()<<"start!";
     g_controller_interface.Shutdown();
     m_RenWid = new RenderWidget;
+    m_RenWid->resize(1280,720);
     if(BootManager::BootCore(m_GameList->getFilePath(index).toStdString())) {
-        m_RenWid->showFullScreen();
+        m_RenWid->show();
+        connect(m_RenWid,SIGNAL(EscapePressed()),this,SLOT(handleEscapePressed()));
     } else {
         qDebug()<<"Error!";
     }
+}
+
+void MainWindow::handleEscapePressed()
+{
+    qDebug()<<"Escape!";
+    if(m_PauseWidget) {
+        qDebug()<<"AAAAAAAA!";
+        m_PauseWidget->close();
+        m_PauseWidget = NULL;
+        qDebug()<<"AAAAAAAA!";
+        Core::SetState(Core::CORE_RUN);
+    } else {
+        m_PauseWidget = new QQuickWidget();
+
+        QScreen *screen = QGuiApplication::primaryScreen();
+        QPixmap screenshot = screen->grabWindow(m_RenWid->winId());
+
+        m_PauseWidget->engine()->addImageProvider(QStringLiteral("screen"),new ScreenShotImgProvider(screenshot));
+        m_PauseWidget->engine()->rootContext()->setContextProperty(QStringLiteral("cppMainWin"), this);
+        m_PauseWidget->setSource(QUrl(QStringLiteral("qrc:/qml/PauseMenu.qml")));
+        m_PauseWidget->setResizeMode(QQuickWidget::SizeRootObjectToView);
+        m_PauseWidget->setWindowFlags(Qt::FramelessWindowHint | Qt::NoDropShadowWindowHint);
+        m_PauseWidget->show();
+        m_PauseWidget->setGeometry(m_RenWid->geometry());
+        Core::SetState(Core::CORE_PAUSE);
+    }
+
 }

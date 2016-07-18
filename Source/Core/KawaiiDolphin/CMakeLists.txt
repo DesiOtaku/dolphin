@@ -17,6 +17,7 @@ set(SRCS
         qmlfiles.qrc
         icons.qrc
         sounds.qrc
+        screenshotimgprovider.cpp
 	Config/PathDialog.cpp
         GameList/GameFile.cpp
         GameList/GameList.cpp
